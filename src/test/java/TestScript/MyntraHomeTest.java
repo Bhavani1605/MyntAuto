@@ -22,10 +22,13 @@ import PageObjects.RainJacketsPage;
 
 public class MyntraHomeTest {
 
-  ChromeOptions Options = new ChromeOptions();
-  //Options.addArguments("--disable-notifications");
-
-  ChromeDriver driver = new ChromeDriver(Options);
+  public  ChromeOptions getCop(){
+	  ChromeOptions cop = new ChromeOptions();
+	  cop.addArguments("--disable-notifications");
+	  return cop;
+	}
+   
+  ChromeDriver driver = new ChromeDriver(getCop());
   MyntraHomePage myntrahome = new MyntraHomePage(driver);
   RainJacketsPage rp = new RainJacketsPage(driver);
   RainJacketProductPage productPage = new RainJacketProductPage(driver);
@@ -41,8 +44,10 @@ public class MyntraHomeTest {
   @Test(priority = 1)
   void testOpen() {
     try {
-      driver.manage().window().maximize();
+      
       driver.get(siteURL);
+      driver.manage().window().maximize();
+      driver.manage().deleteAllCookies();
       wait.until(ExpectedConditions.visibilityOf(myntrahome.searchBar));
       Assert.assertEquals(driver.getTitle(), "Online Shopping for Women, Men, Kids Fashion & Lifestyle - Myntra");
 
